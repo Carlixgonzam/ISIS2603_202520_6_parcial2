@@ -1,0 +1,14 @@
+<div *ngIf="!canciones || canciones.length === 0">Seleccione un álbum para ver las canciones.</div>
+
+<div *ngFor="let t of canciones" class="track" style="display:flex; justify-content:space-between; align-items:center; padding:8px; border-bottom:1px solid #eee;">
+  <div style="display:flex; gap:12px; align-items:center;">
+    <div style="width:28px; text-align:center;">{{t.numCancion}}</div>
+    <div>
+      <div>{{ t.nombreCancion }}</div>
+      <div style="font-size:12px; color:#666;">{{ t.minutos | number:'1.2-2' }} min</div>
+    </div>
+  </div>
+  <div>
+    <button (click)="onToggle(t)" [attr.aria-pressed]="t.favorito">{{ t.favorito ? '❤' : '♡' }}</button>
+  </div>
+</div>

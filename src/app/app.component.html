@@ -1,174 +1,36 @@
-<div class="artist-buttons">
-  <div>
-    <img src="images/artist_3qm84nBOXUEQ2vnTfUTTFC.jpg" alt="Guns N' Roses">
-    <span>Guns N' Roses</span>
-  </div>
-  <div>
-    <img src="images/artist_6wWVKhxIU2cEi0K81v7HvP.jpg" alt="Rammstein">
-    <span>Rammstein</span>
-  </div>
-  <div>
-    <img src="images/artist_711MCceyCBcFnzjGY4Q7Un.jpg" alt="AC/DC">
-    <span>AC/DC</span>
-  </div>
-</div>
+<div class="app-layout" style="display:flex; gap:16px; padding:16px;">
+  <aside class="left-col" style="width:320px;">
+    <h3>Artistas</h3>
+    <app-artistas [artistas]="artistas" (artistaSeleccionado)="onArtistSelected($event)"></app-artistas>
 
+    <div class="albums-list" style="margin-top:24px;">
+      <h4 *ngIf="selectedArtist">Álbums de {{selectedArtist.nombre}}</h4>
 
-<div class="container">
-  <div class="artists-list">
-    <div>
-      <img src="images/artist_3qm84nBOXUEQ2vnTfUTTFC.jpg" alt="Guns N' Roses">
-      <h2>Guns N' Roses</h2>
-    </div>
-    <div class="album-card">
-      <img src="images/album_22BtZeG6Kq2VvQVlZCgCAG.jpg" alt="Guns N' Roses - Use Your Illusion II (Deluxe Edition)">
-      <div class="album-info">
-        <h3>Use Your Illusion II (Deluxe Edition)
-          <label class="heart-toggle">
-            <input type="checkbox" name="liked" checked>
-            <span class="heart"></span>
-          </label>
-          <p>2022</p>
-        </h3>
-        <span>Tracks: 20</span>
-        <button>Open tracks</button>
-      </div>
-    </div>
-    <div class="album-card">
-      <img src="images/album_33HYdYXXadqsdZ1NsYmS6o.jpg" alt="Guns N' Roses - Use Your Illusion I (Deluxe Edition)">
-      <div class="album-info">
-        <h3>Use Your Illusion I (Deluxe Edition)
-          <label class="heart-toggle">
-            <input type="checkbox" name="liked">
-            <span class="heart"></span>
-          </label>
-        </h3>
-        <p>2022</p>
-        <span>Tracks: 19</span>
-        <button>Open tracks</button>
-      </div>
-    </div>
-    <div class="album-card">
-      <img src="images/album_0suNLpB9xraAv1FcdlITjQ.jpg" alt="Guns N' Roses - Chinese Democracy">
-      <div class="album-info">
-        <h3>Chinese Democracy
-          <label class="heart-toggle">
-            <input type="checkbox" name="liked">
-            <span class="heart"></span>
-          </label>
-        </h3>
-        <p>2008</p>
-        <span>Tracks: 12</span>
-        <button>Open tracks</button>
-      </div>
-    </div>
-  </div>
+      <ng-container *ngIf="albums && albums.length; else noAlbums">
+        <app-Artista-album
+          *ngFor="let a of albums"
+          [album]="a"
+          (openTracks)="onOpenTracks($event)"
+          (toggleFavorite)="onToggleAlbumFavorite($event)"
+          style="margin-bottom:12px;"
+        ></app-Artista-album>
+      </ng-container>
 
+      <ng-template #noAlbums>
+        <div *ngIf="selectedArtist">No hay álbumes para este artista.</div>
+      </ng-template>
+    </div>
+  </aside>
 
+  <main class="right-col" style="flex:1;">
+    <h3 *ngIf="selectedAlbumTracks && selectedAlbumTracks.length">Canciones</h3>
+    <app-Artista-listado
+      [canciones]="selectedAlbumTracks"
+      (toggleFavorite)="onToggleTrackFavorite($event)"
+    ></app-Artista-listado>
 
-
-
-  <div class="album">
-    <div class="cover"
-      style="background-image: url('images/album_0suNLpB9xraAv1FcdlITjQ.jpg'); background-size: cover; background-position: center;">
-      <h2>Chinese Democracy (2008)</h2>
-      <div class="track-total">Tracks: 12</div>
+    <div *ngIf="!selectedAlbumTracks || selectedAlbumTracks.length === 0" style="margin-top:16px;">
+      <em>Selecciona un álbum y haz click en "Open tracks" para ver las canciones.</em>
     </div>
-    <div class="track">
-      <span>1 - Chinese Democracy</span>
-      <span>4:43</span>
-      <label class="heart-toggle">
-        <input type="checkbox" name="liked" checked>
-        <span class="heart"></span>
-      </label>
-    </div>
-    <div class="track">
-      <span>2 - Shackler's Revenge</span>
-      <span>3:36</span>
-      <label class="heart-toggle">
-        <input type="checkbox" name="liked">
-        <span class="heart"></span>
-      </label>
-    </div>
-    <div class="track">
-      <span>3 - Better</span>
-      <span>4:57</span>
-      <label class="heart-toggle">
-        <input type="checkbox" name="liked" checked>
-        <span class="heart"></span>
-      </label>
-    </div>
-    <div class="track">
-      <span>4 - If The World</span>
-      <span>4:53</span>
-      <label class="heart-toggle">
-        <input type="checkbox" name="liked">
-        <span class="heart"></span>
-      </label>
-    </div>
-    <div class="track">
-      <span>5 - There Was A Time</span>
-      <span>6:40</span>
-      <label class="heart-toggle">
-        <input type="checkbox" name="liked" checked>
-        <span class="heart"></span>
-      </label>
-    </div>
-    <div class="track">
-      <span>6 - Catcher In The Rye</span>
-      <span>5:52</span>
-      <label class="heart-toggle">
-        <input type="checkbox" name="liked" checked>
-        <span class="heart"></span>
-      </label>
-    </div>
-    <div class="track">
-      <span>7 - Scraped</span>
-      <span>3:30</span>
-      <label class="heart-toggle">
-        <input type="checkbox" name="liked">
-        <span class="heart"></span>
-      </label>
-    </div>
-    <div class="track">
-      <span>8 - Riad N' The Bedouins</span>
-      <span>4:10</span>
-      <label class="heart-toggle">
-        <input type="checkbox" name="liked">
-        <span class="heart"></span>
-      </label>
-    </div>
-    <div class="track">
-      <span>9 - Sorry</span>
-      <span>6:14</span>
-      <label class="heart-toggle">
-        <input type="checkbox" name="liked">
-        <span class="heart"></span>
-      </label>
-    </div>
-    <div class="track">
-      <span>10 - I.R.S.</span>
-      <span>4:27</span>
-      <label class="heart-toggle">
-        <input type="checkbox" name="liked" checked>
-        <span class="heart"></span>
-      </label>
-    </div>
-    <div class="track">
-      <span>11 - Madagascar</span>
-      <span>4:37</span>
-      <label class="heart-toggle">
-        <input type="checkbox" name="liked" checked>
-        <span class="heart"></span>
-      </label>
-    </div>
-    <div class="track">
-      <span>12 - This I Love</span>
-      <span>5:34</span>
-      <label class="heart-toggle">
-        <input type="checkbox" name="liked">
-        <span class="heart"></span>
-      </label>
-    </div>
-  </div>
+  </main>
 </div>
